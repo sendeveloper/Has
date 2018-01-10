@@ -1,4 +1,6 @@
-export class Has{
+import { Ingenicoresourceshas } from './ingenicoresourceshas';
+
+export class Has extends Ingenicoresourceshas{
 	constructor(){
 		
 	}

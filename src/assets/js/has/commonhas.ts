@@ -1,4 +1,6 @@
-export class Commonhas{
+import { Avayahas } from './avayahas';
+
+export class Commonhas extends Avayahas{
 	constructor(){
 		
 	}
