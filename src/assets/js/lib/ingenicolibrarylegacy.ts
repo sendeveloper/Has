@@ -1,4 +1,6 @@
-export class Ingenicolibrarylegacy{
+import { Has } from '../has/has';
+
+export class Ingenicolibrarylegacy extends Has{
 	constructor(){
 
 	}

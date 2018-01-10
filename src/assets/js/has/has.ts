@@ -114,7 +114,7 @@ export class Has extends Ingenicoresourceshas{
 	    return (this.socketConnection.readyState === this.socketConnection.OPEN);
 	}
 
-	captureLanguagePreferenceconnect(port, clientName) {
+	connect(port, clientName) {
 		this.connectionOpeningHappened = false;
 		
 		try {
@@ -142,7 +142,7 @@ export class Has extends Ingenicoresourceshas{
 			this.log("Exception: " + e.message);
 			this.onConnectionErrorHandler("Exception in creating HAS interface. error: " + e.message);
 		}
-	}		
+	}	
 			
 	connectSocketServer(websocketSupport, port, clientName) {
 
