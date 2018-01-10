@@ -1,4 +1,9 @@
-export class Avayahas{
+import { Has } from './has';
+
+export class Avayahas extends Has{
+	constructor(){
+
+	}
 	onScreenPopReadyHandler(data){
 	}
 	onScreenPopHandler(object){

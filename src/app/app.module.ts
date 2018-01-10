@@ -6,8 +6,17 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 
 import { IngenicoLibraryWS } from '../assets/js/ingenicolibraryws';
-import { Shortcut } from '../assets/js/shortcut';
-import { IngenicoIntegration } from '../assets/js/ingenicointegration';
+
+import { Has } from '../assets/js/has/has';
+import { Avayahas } from '../assets/js/has/avayahas';
+import { Commonhas } from '../assets/js/has/commonhas';
+import { Ingenicohas } from '../assets/js/has/ingenicohas';
+import { Ingenicoresourceshas } from '../assets/js/has/ingenicoresourceshas';
+
+import { Idparser } from '../assets/js/lib/idparser';
+import { IngenicoIntegration } from '../assets/js/lib/ingenicointegration';
+import { Ingenicolibrarylegacy } from '../assets/js/lib/ingenicolibrarylegacy';
+import { Shortcut } from '../assets/js/lib/shortcut';
 
 @NgModule({
   declarations: [
@@ -18,7 +27,11 @@ import { IngenicoIntegration } from '../assets/js/ingenicointegration';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [IngenicoLibraryWS, Shortcut, IngenicoIntegration],
+  providers: [
+    IngenicoLibraryWS, 
+    Has, Avayahas, Commonhas, Ingenicohas, Ingenicoresourceshas,
+    Idparser, IngenicoIntegration, Ingenicolibrarylegacy, Shortcut
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
