@@ -1,6 +1,6 @@
-import { Commonhas } from '../has/commonhas';
+import { Idparser } from '../lib/idparser';
 
-export class Ingenicohas extends Commonhas{
+export class Ingenicohas extends Idparser{
 	constructor(){
 		super();
 	}

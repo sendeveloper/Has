@@ -1,6 +1,6 @@
-import { Idparser } from './lib/idparser';
+import { Has } from './has/has';
 
-export class IngenicoLibraryWS extends Idparser{
+export class IngenicoLibraryWS extends Has{
 	parentComponent: any;
 	constructor(){
 		super();

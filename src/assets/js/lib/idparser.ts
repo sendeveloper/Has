@@ -1,6 +1,7 @@
-import { Has } from '../has/has';
+// import { Has } from '../has/has';
+import { Commonhas } from '../has/commonhas';
 
-export class Idparser extends Has{
+export class Idparser extends Commonhas{
 	constructor(){
 		super();
 	}
