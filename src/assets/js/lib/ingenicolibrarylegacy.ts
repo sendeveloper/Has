@@ -1,6 +1,6 @@
-import { Has } from '../has/has';
+import { Ingenicohas } from '../has/ingenicohas';
 
-export class Ingenicolibrarylegacy extends Has{
+export class Ingenicolibrarylegacy extends Ingenicohas{
 	constructor(){
 
 	}

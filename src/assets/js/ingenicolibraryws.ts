@@ -1,6 +1,6 @@
-import { Ingenicohas } from './has/ingenicohas';
+import { Idparser } from './lib/idparser';
 
-export class IngenicoLibraryWS extends Ingenicohas{
+export class IngenicoLibraryWS extends Idparser{
 	parentComponent: any;
 	constructor(){
 		this.parentComponent = null;
@@ -17,4 +17,3 @@ export class IngenicoLibraryWS extends Ingenicohas{
 	/*-------------------------------------------------------------------------------*/
 	
 }
-

@@ -1,4 +1,6 @@
-export class Idparser{
+import { Ingenicolibrarylegacy } from './ingenicolibrarylegacy';
+
+export class Idparser extends Ingenicolibrarylegacy{
 	constructor(){
 
 	}
