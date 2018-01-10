@@ -1,0 +1,308 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
+.has-spacer {
+    flex: 1 1 auto;
+}
+.button-row {
+    /*justify-content: space-around;*/
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.has-full-width {
+  width: calc(100% - 20px);
+  margin: 10px;
+}
+.has-input-width {
+  padding-left: 20px;
+  width: 240px;
+}
+.has-tab-group {
+  border: 1px solid #c7c7c7;
+  height: 640px;
+  width: auto;
+  margin: 10px;
+}
+.has-tab-content {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 24px;
+    color: darkgray;
+}
+.mat-select-arrow,
+.mat-select-value,
+.mat-select-trigger,
+.mat-select-placeholder {
+    color: white;
+}
+/*.mat-select-content {*/
+  /*background-color: grey;*/
+/*}*/
+
+.mat-input-underline {
+    background-color: darkgray
+}
+.mat-tab-label {
+  color: black;
+}
+.mat-form-field-label{
+  color: darkgray;
+}
+.mat-input-element:focus + .mat-form-field-label{
+  color: #c2185b;
+}
+.mat-raised-button{
+  margin: 10px 0 !important;
+}
+
+/* Output */
+div.outputcontainer {
+  background-color: #b0b0b0;
+  color: white;
+  border: 1px solid white;
+  position: fixed;
+  margin: 5px;
+  padding: 5px;
+  right: 50px;
+  left: 50px;
+  top: 50px;
+  bottom: 50px;
+  z-index: 20;
+}
+
+div.outputcontainer div.outputclear {
+  margin-right: 5px;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: inline-block;
+}
+
+div.outputcontainer div.outputclear a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.outputcontainer div.outputclose {
+  /*text-align: right;*/
+  margin: 0;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: inline-block;
+}
+
+div.outputcontainer div.outputclose a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.outputcontainer div.output {
+}
+
+/* Output Popup */
+div.outputpopup {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  padding: 10px;
+  background-color: #b0b0b0;
+  color: white;
+  border: 1px solid white;
+  z-index: 10;
+}
+
+/* Image */
+div.imagecontainer {
+  text-align: center;
+  background-color: #b0b0b0;
+  color: white;
+  border: 1px solid white;
+  position: fixed;
+  margin: 5px;
+  padding: 5px;
+  right: 50px;
+  left: 50px;
+  top: 50px;
+  bottom: 50px;
+  z-index: 30;
+}
+
+div.imagecontainer div.imageclear {
+  margin-right: 5px;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: block;
+}
+
+div.imagecontainer div.imageclear a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.imagecontainer div.imageclose {
+  margin: 0;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: block;
+}
+
+div.imagecontainer div.imageclose a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.imagecontainer div.widediv {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+
+div.imagecontainer div.widediv img#sigimage {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+div.scancontainer {
+  text-align: center;
+  background-color: #b0b0b0;
+  color: white;
+  border: 1px solid white;
+  position: fixed;
+  margin: 5px;
+  padding: 5px;
+  right: 50px;
+  left: 50px;
+  top: 50px;
+  bottom: 50px;
+  z-index: 30;
+}
+
+div.scancontainer div.scanclear {
+  margin-right: 5px;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: block;
+}
+
+div.scancontainer div.scanclear a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.scancontainer div.scanclose {
+  margin: 0;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: block;
+}
+
+div.scancontainer div.scanclose a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.scancontainer div.scandiv {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+
+div.scancontainer div.scandiv img#scanimage {
+  max-width: 400px;
+  max-height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div.scanfieldcontainer {
+  text-align: center;
+  background-color: #b0b0b0;
+  color: white;
+  border: 1px solid white;
+  position: fixed;
+  margin: 5px;
+  padding: 5px;
+  right: 50px;
+  left: 50px;
+  top: 50px;
+  bottom: 50px;
+  z-index: 30;
+}
+
+div.scanfieldcontainer div.scanfieldclear {
+  margin-right: 5px;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: block;
+}
+
+div.scanfieldcontainer div.scanfieldclear a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.scanfieldcontainer div.scanfieldclose {
+  margin: 0;
+  padding: 5px;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  display: block;
+}
+
+div.scanfieldcontainer div.scanfieldclose a {
+  margin: 5px;
+  padding: 5px;
+  color: #b0b0b0;
+  text-decoration: none;
+}
+
+div.scanfieldcontainer div.scanfielddiv {
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+}
+
+div.scanfieldcontainer div.scanfielddiv img#scanimage {
+  max-width: 400px;
+  max-height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div.scanfieldcontainer div.scanfielddiv div input {
+  display: inline;
+}

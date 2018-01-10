@@ -1,0 +1,390 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="primary">
+  <span style="color: white">Hybrid Application Service (HAS) Test Site</span>
+  <span class="has-spacer"></span>
+  <mat-form-field>
+    <mat-select [(value)]="clientName" style="font-size: 14px;" [disabled]="buttonAttribute['clientName']">
+      <mat-option value="option1">GENERAL</mat-option>
+      <mat-option value="option2">REBELLIONUI</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class='button-row'>
+    <button mat-button [disabled]="buttonAttribute['connect']" (click)="connectWebSocket()">Connect</button>
+    <button mat-button [disabled]="buttonAttribute['disconnect']" (click)="disconnectWebSocket()">Disconnect</button>
+    <button mat-button (click)="fImageDisplay(true)">Display Signature</button>
+  </div>
+</mat-toolbar>
+
+
+  <p>Output</p>
+  <div class="has-full-width">
+    <textarea rows="5" placeholder="Execution output...." style="width: 100%" [(value)]="outputta"></textarea>
+    <button mat-raised-button color="primary" style="margin:10px" (click)="fClearOutput()">Clear Output</button>
+    <textarea rows="2" placeholder="Response..." style="width: 100%" [(value)]="responseData"></textarea>
+  </div>
+
+<mat-tab-group class="has-tab-group" [(selectedIndex)]="selectedIndex">
+  <mat-tab label="Computer" color="primary">
+    <div>
+      <div class="has-tab-content">Computer</div>
+      <div class='button-row'>
+        <button mat-raised-button color="primary" (click)="fWriteOutput('ComputerName'); getComputerName();">Name</button>
+        <button mat-raised-button color="primary" (click)="fWriteOutput('MACAddress'); getMACAddress();">MAC Address</button>
+        <button mat-raised-button color="primary" (click)="fWriteOutput('hasVersion'); getHASVersion();">Has Version</button>
+        <button mat-raised-button color="primary" (click)="fWriteOutput('MACAddress'); mutlipleMacTest();">MAC Address</button>
+      </div>
+    </div>
+  </mat-tab>
+  <!-- Payment Terminal-->
+  <mat-tab label="Payment Terminal">
+    <div class="has-tab-content">Ingenico Payment Terminal</div>
+    <div style="padding-left:20px">
+      <mat-checkbox [(value)]="langPref" color="primary" (change)="getLangPref();">Select for Spanish</mat-checkbox>
+    </div>
+    <mat-tab-group class="has-tab-group" style="margin-left: 20px; margin-right: 20px;height: 480px">
+      <mat-tab label="Miscellaneous">
+        <div class="has-tab-content">Miscellaneous</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Online'); paymentTerminalOnline();">Online</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Offline'); paymentTerminalOffline();">Offline</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Version'); getDeviceVersion('VERSION');">Version</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Health'); getHealthStats('all');">Health Stats</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Ads'); displayAds();">Display Ads</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Reboot'); rebootPaymentTerminal();">Reboot Ingenico</button>
+        </div>
+        <div class="button-row">
+          <mat-form-field>
+            <input matInput placeholder="Reset Type:" [(value)]="resetType">
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Soft Reset'); performSoftReset('', '', '', false);">Soft Reset</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Soft Reset'); performSoftReset('104', 'itemlist', '', false);">Soft Reset(POS-No Item-Must use8)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Soft Reset'); performSoftReset('104', 'itemlist', 'Test', true);">Soft Reset(POS-No Item-Must use8)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Sentry'); ConnectSentry();">Connect Sentry</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Sentry'); ConnectSentryContinueous();">Connect Sentry Cont</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Variable Request">
+        <div class="has-tab-content">Variable Request</div>
+        <div>
+          <mat-form-field class="has-input-width">
+            <input matInput placeholder="Var Index" [(value)]="varIndex">
+          </mat-form-field><br>
+          <mat-form-field class="has-input-width">
+            <input matInput placeholder="Var Text" [(value)]="varString">
+          </mat-form-field><br>
+          <mat-form-field class="has-input-width">
+            <input matInput placeholder="Config Value Text" [(value)]="configValueString">
+          </mat-form-field><br>
+        </div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" [disabled]="buttonAttribute['setvariable']" (click)="fWriteOutput('Set Variable'); processVariableRequest(true, false, false);">Set Variable</button>
+          <button mat-raised-button color="primary" [disabled]="buttonAttribute['getvariable']" (click)="fWriteOutput('Get Variable'); processVariableRequest(false, false, false);">Get Variable</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Read Configuration'); processVariableRequest(false, true, false);">Read Configuration</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Write Configuration'); processVariableRequest(false, false, true);">Write Configuration</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Capture Signature">
+        <div class="has-tab-content">Capture Signature(20 Messages)</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('CAPTURE', '','');">Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('CREDIT', '100.00','');">Credit Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('CIHU', '100.00','');">CIHU Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('DRP', '','');">DRP Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('TESA', '','');">TESA Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('ON_FILE', '','');">ON File Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('EIP', '','20150929316300000');">Financial Signature</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Signature'); captureSignature('', '','');">Empty Signature</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Clear Entry">
+        <div class="has-tab-content">Display Clear Entry Forms(21 Messages)</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('PERSONAL_GUARANTOR', '315', '7');">Personal Guarantor Phone</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('LAST_FOUR', '314', '36');">Last Four</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('PRIMARY_PHONE', '310', '7');">Primary Phone</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('HOME_PHONE', '222', '7');">Home Phone</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); captureLastThreeOfPlanId();">Capture 3-Digit Pin</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('P_NUMBER', '313', '37');">P Number</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('FEIN', '312', '34');">FEIN</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('SSN', '301', '34');">SSN</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('PIN_CREATE', '311', '36');">Create PIN Form</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); displayClearEntryForm('PIN_ENTER', '233', '36');">Enter PIN Form</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('ClearEntry'); captureEmailAddress();">Capture Email Address Form</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Capture MSR Data">
+        <div class="has-tab-content">Capture MSR Data(23 Messages)</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('MSR'); captureCreditCard();">Credit Card Capture</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('MSR'); captureCreditCardFD('swipecc.k3z', true);">Credit Card Capture FD</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('MSR'); captureCreditCardFD('ccodm.k3z', true);">Credit Card Capture Manual FD</button>
+          <button mat-raised-button color="primary" [disabled]="buttonAttribute['dlcapture']" (click)="fWriteOutput('Capture DL Info'); fScanGet(); captureDL();">DL Capture</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Display Forms">
+        <div class="has-tab-content">Display Forms(23 Messages)</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayWelcome();">Welcome</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayThankYou();">Thank You</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayCCDisclaimer();">Credit Card Disclaimer</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayDLDisclaimer();">Driver's License Disclaimer</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); captureLanguagePreference(null);">Capture Language Preference</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('INFORM');">Display Inform Form</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('HAND_PAY');">Handy Pay Form</button>
+        </div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('DECLINED');">Declined Form</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('INSUFFICIENT_FUNDS');">Insufficient Funds</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('TIME_OUT');">Time out</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('PIN_ERROR_DEBIT');">Pin Error Debit</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('REFUND_PIN_ERROR');">Refund Pin Error</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayInformationForm('SYSTEM_UNAVAILABLE');">System Unavailable</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayAuthorizingForm();">Authorizing</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayCardErrorForm('PIN_ERROR_HYBRID');">Hybrid Card Pin Error</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayCardErrorForm('CVV_ERROR');">CVV Error</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayCardErrorForm('EXPIRED_ERROR');">Expired Error</button>
+        </div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); verifyPhone('4255556598');">Verify Phone</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); verifySSN('000553759');">Verify SSN</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); verifyDL('Testing Tester', '176 Looney Toon Ln', 'Everett', 'FL', '75493', '07/16/1954', 'FUDDEL269CR');">Verify DL</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); verifyAmount('201.26');">Verify Amount</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayPartialAuthForm('15.10', '25.53');">Partial Authorization</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displayItemListForm();">Item List</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); processCreditCard('25.00');">Process as Credit</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displaySalesTrans('112.01', '3.20', '382.81', '383.01', '10.20');">Sales Tran-Balance Due</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Form'); displaySalesTrans('112.01', '3.20', '382.81', '383.01', '-0.20');">Sales Tran-Change Due</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Ts and Cs">
+        <div class="has-tab-content">Display Terms and Conditions(25 Messages)</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('1', false, '', '', '', '', '');">B2R New Activation+AAL</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('2', false, '', '', '', '', '');">New Activations+AAL Individual+Small Business</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('3', false, '', '', '', '', '');">POS-HSO/CIHU</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('4', false, '', '', '', '', '');">Rate Plan Change</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('5', false, '', '', '', '', '');">B2R Rate Plan Change</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('6', false, '', '', '', '', '');">Easy Pay</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('7', false, 'Testing Tester', '07/23/2014', '', '', '');">Device Recovery Program</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('8', true, 'Testing Tester', '', '(425)555-6778', 'Testing', '853659526514732');">In-Home Coverage</button>
+        </div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('10', false, '', '', '', '', '');">Financial Agreements/Electronic Disclosure</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('11', false, '', '', '', '', '');">Warranty Exchange-In-Store Fulfilment</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('12', false, '', '', '', '', '');">Warranty Exchange-In-Store Drop-off</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('18', false, '', '', '', '', '');">Stored Payment Methods</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('19', false, '', '', '', '', '');">Prepaid U2.0</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('20', false, '', '', '', '', '');">B2R New Activations+AAL(Digits)</button>
+        </div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('21', false, '', '', '', '', '');">New Activations+AAL Individual+Small Business(Digits)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('22', false, '', '', '', '', '');">Rate Plan Change(Digits)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('T&C'); displayText('23', false, '', '', '', '', '');">B2R Rate Plan Change(Digits)</button>
+        </div>
+        <div class="has-tab-content">Manual Terms And Conditions</div>
+        <form style="margin-left: 20px">
+          <textarea rows="5" placeholder="Write something here...." style="width: 100%;" [(value)]="textAreaTC"></textarea><br>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Manual Terms'); displayManualTCs();">Submit Manual Ts &nbsp; Cs</button>
+        </form>
+      </mat-tab>
+      <mat-tab label="Capture Debit Pin">
+        <div class="has-tab-content">Capture Debit Pin(31 Messages)</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Pin'); getPin('1', false);">Capture Debit Pin(Debit) Form</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Pin'); getPin('15', true);">Capture Debit Pin(Debit) Form(Invalid PIN)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Pin'); getPin('1', true);">Capture Debit Pin(Debit) Form(Credit)</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Transactional Flows">
+        <div class="has-tab-content">Transactional Flows</div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Activation'); activationFlowPersonal = true; captureLangPref = true; captureLanguagePreference(null);">Activation-Personal</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Activation'); activationFlowEmployee = true; captureLangPref = true; captureLanguagePreference(null);">Activation-Employee</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Activation'); activationFlowPersonalGuarantor = true; captureLangPref = true; captureLanguagePreference(null);">Activation-Personal Guarantor</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Activation'); activationFlowAddALine = true; captureLangPref = true; captureLanguagePreference(null);">Activation-Add-A-Line</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Purchase'); purchaseFlowCredit = true; captureLanguagePreference(null);">POS Purchase (Credit)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Purchase'); purchaseFlowDebit = true; captureLanguagePreference(null);">POS Purchase (Debit)</button>
+        </div>
+        <div class='button-row'>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Purchase'); purchaseFlowCash = true; captureLanguagePreference(null);">POS Purchase (Cash)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Purchase'); purchaseFlowDrp = true; captureLangPref = true; captureLanguagePreference(null);">POS Purchase (DRP)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Purchase'); purchaseFlowIhc = true; captureLangPref = true; captureLanguagePreference(null);">POS Purchase (In-Home Coverage)</button>
+          <button mat-raised-button color="primary" (click)="fWriteOutput('Purchase'); purchaseFlowFa = true; captureLangPref = true; captureLanguagePreference(null);">POS Purchase (Financial Agreements)</button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-tab>
+  <!-- Barcode Scanner-->
+  <mat-tab label="Barcode Scanner">
+    <div class="has-tab-content">Motorola Symbol Barcode Scanner</div>
+    <div class='button-row'>
+      <button mat-raised-button color="primary" [disabled]="buttonAttribute['scandl']" (click)="fWriteOutput('Scan'); fScanGet();">Scan DL</button>
+      <button mat-raised-button color="primary" (click)="fScanfieldDisplay(true);">Show DL Fields</button>
+    </div>
+  </mat-tab>
+  <mat-tab label="Cash Drawer">
+    <div class="has-tab-content">AGP Cash Drawer</div>
+    <div class='button-row'>
+      <button mat-raised-button color="primary" (click)="fWriteOutput('OpenCashDrawer'); openCashDrawer(null);">Open Cash Drawer</button>
+    </div>
+  </mat-tab>
+  <mat-tab label="QuickView">
+    <div class="has-tab-content">QuickView</div>
+    <form>
+      <mat-form-field class="has-input-width">
+        <input matInput placeholder="BAN" [(value)]="accountNumber">
+      </mat-form-field><br>
+      <mat-form-field class="has-input-width">
+        <input matInput placeholder="Mobile" [(value)]="mobileNumber">
+      </mat-form-field><br>
+      <mat-form-field class="has-input-width">
+        <input matInput placeholder="ssoToken" [(value)]="token">
+      </mat-form-field><br>
+      <mat-form-field class="has-input-width">
+        <input matInput placeholder="Channel" [(value)]="channel">
+      </mat-form-field><br>
+      <button mat-raised-button color="primary" style="margin-left: 20px" (click)="fWriteOutput('QV'); launchQuikView();">Launch QuickView</button>
+    </form>
+  </mat-tab>
+  <mat-tab label="Sentry">
+    <div class="has-tab-content">ScreenPop Sentry</div>
+    <div class='button-row'>
+      <button mat-raised-button color="primary" (click)="fWriteOutput('Sentry'); ConnectSentry();">Connect Sentry</button>
+      <button mat-raised-button color="primary" (click)="fWriteOutput('Sentry'); ConnectSentryContinueous();">Connect Sentry Cont</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<div class="outputcontainer" id="outputcontainer" *ngIf="outputcontainer">
+  <div class="outputclose">
+    <a href="#" (click)="fOutputDisplay(false);">Close</a></div>
+  <div class="outputclear"><a href="#" (click)="fClearOutput();">Clear</a></div>
+  <div class="output" id="output" [innerHTML]="output"></div>
+</div>
+<div class="outputpopup" id="outputpopup" *ngIf="outputpopupcontainer" [innerHTML]="outputpopup"></div>
+<div class="imagecontainer" id="imagecontainer" *ngIf="imagecontainer">
+  <div class="imageclose"><a href="#" (click)="fImageDisplay(false);">Close</a></div>
+  <div class="imageclear"><a href="#" (click)="fClearImage();">Clear</a></div>
+  <div class="widediv">
+    <img id="sigimage" alt="Signature" />
+  </div>
+</div>
+<div class="scancontainer" id="scancontainer" *ngIf="scancontainer">
+  <div class="scanclose"><a href="#" (click)="fScanDisplay(false);">Close</a></div>
+  <div class="scandiv">
+    <img id="scanimage" src="assets/images/DLSwipe1.jpg" alt="Scan" />
+  </div>
+</div>
+<div class="scanfieldcontainer" id="scanfieldcontainer" *ngIf="scanfieldcontainer">
+  <div class="scanfieldclose"><a href="#" (click)="fScanfieldDisplay(false);">Close</a></div>
+  <div class="scanfieldclear"><a href="#" (click)="fScanfieldClear();">Clear</a></div>
+  <div class="scanfielddiv">
+    <div id="scanButtonDiv" style="display:none">
+      <input id="scannerButton" type="button" value="Scan"/>
+    </div>
+    <label for="firstName">First Name*</label>
+    <input id="firstName" name="firstName" type="text" autocorrect="off" autocapitalize="on" maxlength="42" onkeypress="return onlyAlphabet(event)" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="midInit">Initial</label>
+    <input type="text" name="midInit" id="midInit" autocorrect="off" autocapitalize="on" onkeypress="return onlyAlphabet(event)" maxlength="1" onkeyup="enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="lastName">Last Name*</label>
+    <input name="lastName" id="lastName" type="text" autocorrect="off" onkeypress="return onlyAlphabet(event)" autocapitalize="on" maxlength="42" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="suffix">Suffix</label>
+    <select name="suffix" id="suffix" onchange="enableCreditCheckClearAllButton();">
+      <option value=""></option>
+      <option value="JR">Jr</option>
+      <option value="SR">Sr</option>
+      <option value="3">3rd</option>
+      <option value="4">4th</option>
+      <option value="5">5th</option>
+      <option value="6">6th</option>
+      <option value="7">7th</option>
+      <option value="8">8th</option>
+      <option value="9">9th</option>
+    </select>
+    <br />
+    <label for="company">Company</label>
+    <input name="company" id="company" type="text" autocorrect="off" autocapitalize="off" maxlength="45" onkeypress="return alphanumeric(event)" onkeyup="enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="billAttention">Attention</label>
+    <input type="text" name="billAttention"  id="billAttention" autocorrect="off" autocapitalize="on" maxlength="30" onkeypress="return alphanumeric(event)" onkeyup="enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <br />
+    <label for="address1">Address*</label>
+    <input name="address1" id="address1" type="text" autocorrect="off" autocapitalize="off" maxlength="90" onkeypress="return alphanumeric(event)" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="address2">Address Line 2</label>
+    <input type="text" name="address2"  id="address2" autocorrect="off" autocapitalize="on" maxlength="100" onkeypress="return alphanumeric(event)" onkeyup="enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <br />
+    <label for="zip">Zip*</label>
+    <input name="zip" id="zip" onkeypress="return onlyNumber(event)" type="tel" maxlength="9" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="city">City*</label>
+    <input type="text" id="city" name="city" autocorrect="off" autocapitalize="on" maxlength="60" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="state">State*</label>
+    <select name="state" id="state" onchange="enableCreditCheckClearAllButton();enableCreditCheckButton();" onkeyup=" prStateDisabled();">
+      <option value="AK" selected="true">AK</option><option value="AL">AL</option><option value="AR">AR</option><option value="AS">AS</option><option value="AZ">AZ</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DC">DC</option><option value="DE">DE</option><option value="FC">FC</option><option value="FL">FL</option><option value="FM">FM</option><option value="GA">GA</option><option value="GU">GU</option><option value="HI">HI</option><option value="IA">IA</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="MA">MA</option><option value="MD">MD</option><option value="ME">ME</option><option value="MH">MH</option><option value="MI">MI</option><option value="MN">MN</option><option value="MO">MO</option><option value="MP">MP</option><option value="MS">MS</option><option value="MT">MT</option><option value="NC">NC</option><option value="ND">ND</option><option value="NE">NE</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NV">NV</option><option value="NY">NY</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="PR">PR</option><option value="PW">PW</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VA">VA</option><option value="VI">VI</option><option value="VT">VT</option><option value="WA">WA</option><option value="WI">WI</option><option value="WV">WV</option><option value="WY">WY</option>
+    </select>
+    <br />
+    <label for="idType">ID Type*</label>
+    <select id="idType" name="idType" onchange="enableCreditCheckClearAllButton();">
+      <option selected="true" value="0">Drivers License</option>
+      <option value="3">Passport</option>
+      <option value="4">Military</option>
+      <option value="5">Other PR ID</option>
+      <option value="1">Student</option>
+    </select>
+    <label for="idIssued">State Issued*</label>
+    <select name="idIssued" id="idIssued" onchange="enableCreditCheckClearAllButton();" >
+      <option value="AK" selected="true">AK</option><option value="AL">AL</option><option value="AR">AR</option><option value="AS">AS</option><option value="AZ">AZ</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DC">DC</option><option value="DE">DE</option><option value="FC">FC</option><option value="FL">FL</option><option value="FM">FM</option><option value="GA">GA</option><option value="GU">GU</option><option value="HI">HI</option><option value="IA">IA</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="MA">MA</option><option value="MD">MD</option><option value="ME">ME</option><option value="MH">MH</option><option value="MI">MI</option><option value="MN">MN</option><option value="MO">MO</option><option value="MP">MP</option><option value="MS">MS</option><option value="MT">MT</option><option value="NC">NC</option><option value="ND">ND</option><option value="NE">NE</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NV">NV</option><option value="NY">NY</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="PR">PR</option><option value="PW">PW</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VA">VA</option><option value="VI">VI</option><option value="VT">VT</option><option value="WA">WA</option><option value="WI">WI</option><option value="WV">WV</option><option value="WY">WY</option>
+    </select>
+    <label for="id">ID*</label>
+    <input id="id" name="id" type="text" autocorrect="off" autocapitalize="off" maxlength="40" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <br />
+    <!--Smart credit Ph2 2016 changes start -->
+      <!-- Number to Port-in <input id="numberToPortMsisdn" name="numberToPortMsisdn" type="text" maxlength="12"   pattern="[0-9]*" value="" onkeypress="return onlyNumber(event)"  onkeyup="retainPhoneNumber('numberToPortMsisdn'); enableCreditCheckButtonOnPortIn()" onchange="enableCreditCheckButtonOnPortIn();"/> -->
+    <label for="msisdnPin">PIN</label>
+    <input type="password" style="width:100px;" id="msisdnPin" name="msisdnPin" maxlength="8" onkeypress="return onlyNumber(event)"  pattern="\d*" onkeyup="enableCreditCheckButtonOnPortIn();" onchange="enableCreditCheckButtonOnPortIn();" />
+    <br />
+    <!--Smart credit Ph2 2016 changes End -->
+    <label for="ssn">SSN*</label>
+    <input type="password" id="ssn" name="ssn" onkeypress="return onlyNumber(event)" maxlength="9"  pattern="\d*" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" (click)="populateSSN();" onchange="enableCreditCheckButton();" />
+    <label for="ssnconfirm">Verify SSN*</label>
+    <input type="password" id="ssnconfirm" name="ssnconfirm" onkeypress="return onlyNumber(event)" maxlength="9"  pattern="\d*" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" onchange="enableCreditCheckButton();" />
+    <label for="birthDate">Birth Date*</label>
+    <input id="birthDate" name="birthDate" type="text" pattern="\d*" placeholder="MM/DD/YYYY" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" maxlength=10 onchange="enableCreditCheckButton();" />
+    <!--Smart Credit ph2 jan 2016 changes below existing code is manipulated-->
+      <!-- Number to Port-in<input id="numberToPortMsisdn" name="numberToPortMsisdn" type="text" maxlength="12"   pattern="[0-9]*" value="" onkeypress="return onlyNumber(event)"  onkeyup="retainPhoneNumber('numberToPortMsisdn'); enableCreditCheckButtonOnPortIn()" onchange="enableCreditCheckButtonOnPortIn();"/> -->
+    <!-- Smart Credit jan 2016 changes ends -->
+    <br />
+    <div id="showOnBusinessAccount" style="display: none;">
+      <div class="formField">
+        <div>Home Number*</div>
+        <div><input id="BhomePhone" name="BhomePhone" type="tel" maxlength="12" onkeypress="return onlyNumber(event)"  pattern="\d*" onkeyup="retainPhoneNumber('BhomePhone');enableCreditCheckButton(); enableCreditCheckClearAllButton();" (click)="StartCapturePhoneNumber();"/></div>
+      </div>
+      <div class="formField">
+        <div>Mobile Number*</div>
+        <div><input id="mobilePhone" name="mobilePhone" type="tel" maxlength="12" onkeypress="return onlyNumber(event)" pattern="\d*" onkeyup="retainPhoneNumber('mobilePhone');enableCreditCheckButton(); enableCreditCheckClearAllButton();" (click)="StartCaptureMobileNumber();"/></div>
+      </div>
+      <div class="formField">
+        <div>Work Number</div>
+        <div><input id="BworkPhone" name="BworkPhone" type="tel" maxlength="12" onkeypress="return onlyNumber(event)" pattern="\d*" onkeyup="retainPhoneNumber('BworkPhone');enableCreditCheckButton(); enableCreditCheckClearAllButton();" (click)="StartCaptureWorkNumber();"/></div>
+        <div style="width:auto; display:none;" id='errorMsg'></div>
+      </div>
+    </div>
+    <label for="homePhone">Primary Contact Number*</label>
+    <input id="homePhone" name="homePhone" type="tel" maxlength="12" onkeypress="return onlyNumber(event)" onkeyup="retainPhoneNumber('homePhone');enableCreditCheckButton(); enableCreditCheckClearAllButton();" (click)="StartCapturePhoneNumber();" onchange="enableCreditCheckButton();" />
+    <label for="pin">PIN*</label>
+    <input type="text" id="pin" name="pin" maxlength="4" onkeypress="return onlyNumber(event)"  pattern="\d*" onkeyup="enableCreditCheckButton(); enableCreditCheckClearAllButton();" (click)="StartCapturePIN();" onchange="enableCreditCheckButton();" />
+    <!-- Simple choice 2014 August changes -->
+    <label for="emailCreditPage">Email</label>
+    <input id="emailCreditPage" name="emailCreditPage" type="email" maxlength="40" onkeyup="enableCreditCheckButton();enableCreditCheckClearAllButton();" (click)="StartCaptureEmail()" onchange="enableCreditCheckButton();" />
+    <br />
+  </div>
+</div>
+<!-- <mat-dialog-content>
+  <h2 mat-dialog-title>Delete all</h2>
+  <mat-dialog-content>
+    Are you sure?
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>No</button>
+    <button mat-button [mat-dialog-close]="true">Yes</button>
+  </mat-dialog-actions>
+</mat-dialog-content> -->
