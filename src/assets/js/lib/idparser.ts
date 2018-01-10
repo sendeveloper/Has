@@ -1,8 +1,8 @@
-import { Ingenicolibrarylegacy } from './ingenicolibrarylegacy';
+import { Has } from '../has/has';
 
-export class Idparser extends Ingenicolibrarylegacy{
+export class Idparser extends Has{
 	constructor(){
-
+		super();
 	}
 	CreateIdObject(){
 		var obj = {

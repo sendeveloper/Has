@@ -1,11 +1,48 @@
-import { Ingenicohas } from '../has/ingenicohas';
+import { Ingenicoresourceshas } from '../has/ingenicoresourceshas';
 
-export class Ingenicolibrarylegacy extends Ingenicohas{
+export class Ingenicolibrarylegacy extends Ingenicoresourceshas{
 	constructor(){
-
+		super();
 	}
 	hasActiveXobject: any;
 	activeXRequestType: any;
+
+	// original from has.js
+	debug = false;
+	ClientName = "";
+	socketConnection = null;
+	isNotNullOrEmpty(expectedData) {	
+		return (expectedData !== null && expectedData !== "");
+	};
+	log(msg) {
+		if (this.debug && window.console) {
+			console.log(msg);
+		}
+	};
+	onErrorMessageHandler(message) {};
+	sendMessageToSocketServer(jr) {
+		if (this.socketConnection !== undefined && this.isNotNullOrEmpty(this.socketConnection)) {
+			if (this.socketConnection && this.socketConnection.readyState === this.socketConnection.OPEN) {
+				var finalRequest = JSON.stringify(jr);
+				if(finalRequest.length <= 1600) {
+					this.socketConnection.send(JSON.stringify(jr));
+				} else {
+					this.onErrorMessageHandler("Request was too large, Request must be less than 1024 bytes");
+				}
+			} else {
+				this.onErrorMessageHandler("WebSocket not connected to send message, connection state: " + this.socketConnection.readyState);
+			}
+		} else {
+			this.onErrorMessageHandler("No websocket session to send message.");
+		}
+	};
+	// original from avayahas.js
+	onScreenPopReadyHandler(data){
+	}
+	onScreenPopHandler(object){
+	}
+
+
 	initLegacy() {
 	
 		try{
@@ -93,7 +130,7 @@ export class Ingenicolibrarylegacy extends Ingenicohas{
 }
 
 var HASScreenPopAX;
-var ingenicolibraryws = new IngenicoLibraryWS();
+var ingenicolibraryws = new Ingenicolibrarylegacy();
 
 function addActiveXEventListers(obj, _strEventId, _functionCallback) {
 

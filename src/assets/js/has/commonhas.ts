@@ -1,8 +1,8 @@
-import { Avayahas } from './avayahas';
+import { Ingenicolibrarylegacy } from '../lib/ingenicolibrarylegacy';
 
-export class Commonhas extends Avayahas{
+export class Commonhas extends Ingenicolibrarylegacy{
 	constructor(){
-		
+		super();	
 	}
 	getComputerName() {
 		this.log("Common getComputerName");

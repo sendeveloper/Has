@@ -3,6 +3,7 @@ import { Idparser } from './lib/idparser';
 export class IngenicoLibraryWS extends Idparser{
 	parentComponent: any;
 	constructor(){
+		super();
 		this.parentComponent = null;
 	}
 	setParentComponent(t: any){

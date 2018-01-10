@@ -1,8 +1,8 @@
-import { Ingenicoresourceshas } from './ingenicoresourceshas';
+import { Avayahas } from './avayahas';
 
-export class Has extends Ingenicoresourceshas{
+export class Has extends Avayahas{
 	constructor(){
-		
+		super();
 	}
 	setCookie(strName, sid) {
 		document.cookie = strName + "=" + sid;
@@ -39,14 +39,12 @@ export class Has extends Ingenicoresourceshas{
 		return null;
 	};
 	connectionOpeningHappened = false;
-	debug = false;
 	isUnitTest = false;
-	ClientName = "";
 
 	onConnectedHandler(message) {};
 	closeHandler() {};
 	onConnectionErrorHandler(evtData) {};
-	onErrorMessageHandler(message) {};
+	
 
 	init(port, clientName) {
 		if (!this.isNotUndefinedOrNullOrEmpty(port)) {
@@ -61,16 +59,6 @@ export class Has extends Ingenicoresourceshas{
 		
 		this.ClientName = clientName;
 		this.connect(port, clientName);
-	};
-
-	log(msg) {
-		if (this.debug && window.console) {
-			console.log(msg);
-		}
-	};
-
-	isNotNullOrEmpty(expectedData) {	
-		return (expectedData !== null && expectedData !== "");
 	};
 
 	isNotUndefinedOrNull(expectedData){
@@ -91,24 +79,6 @@ export class Has extends Ingenicoresourceshas{
 
 	time = new Date();
 	nowebsocketSupportMessage = "Your browser does not support WebSocket!";
-	socketConnection = null;
-
-	sendMessageToSocketServer(jr) {
-		if (this.socketConnection !== undefined && this.isNotNullOrEmpty(this.socketConnection)) {
-			if (this.socketConnection && this.socketConnection.readyState === this.socketConnection.OPEN) {
-				var finalRequest = JSON.stringify(jr);
-				if(finalRequest.length <= 1600) {
-					this.socketConnection.send(JSON.stringify(jr));
-				} else {
-					this.onErrorMessageHandler("Request was too large, Request must be less than 1024 bytes");
-				}
-			} else {
-				this.onErrorMessageHandler("WebSocket not connected to send message, connection state: " + this.socketConnection.readyState);
-			}
-		} else {
-			this.onErrorMessageHandler("No websocket session to send message.");
-		}
-	};
 
 	isConnected() {
 	    return (this.socketConnection.readyState === this.socketConnection.OPEN);

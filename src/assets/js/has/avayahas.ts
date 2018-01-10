@@ -1,13 +1,10 @@
-import { Has } from './has';
+import { Ingenicohas } from './ingenicohas';
 
-export class Avayahas extends Has{
+export class Avayahas extends Ingenicohas{
 	constructor(){
-
+		super();
 	}
-	onScreenPopReadyHandler(data){
-	}
-	onScreenPopHandler(object){
-	}
+	
 	avayaOnMessageHandler(avaya){
 		this.log("Avaya Handler");
 		if (this.isNotNullOrEmpty(avaya)) {

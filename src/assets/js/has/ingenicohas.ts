@@ -1,8 +1,8 @@
-import { Commonhas } from './commonhas';
+import { Commonhas } from '../has/commonhas';
 
 export class Ingenicohas extends Commonhas{
 	constructor(){
-		
+		super();
 	}
 	currentCreditCardData: any = {};
 	Lastname:any = "";

@@ -1,4 +1,4 @@
-import { IngenicoLibraryWS } from './ingenicolibraryws';
+import { IngenicoLibraryWS } from '../ingenicolibraryws';
 
 export class IngenicoIntegration{
   constructor(){
