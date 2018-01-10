@@ -1,4 +1,3 @@
-// import { Has } from '../has/has';
 import { Commonhas } from '../has/commonhas';
 
 export class Idparser extends Commonhas{
